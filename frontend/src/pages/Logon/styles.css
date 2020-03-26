@@ -23,3 +23,17 @@
     font-size: 32px;
     margin-bottom: 32px;
 }
+
+
+
+@media (max-width: 768px){
+    #heroes{display:none;}
+    .logon-container{
+        height:unset;
+    }
+    .logon-container section.form{
+        max-width: unset;
+        padding:26px;
+        margin-right: 0px;
+    }
+}

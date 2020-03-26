@@ -83,3 +83,21 @@
     line-height: 21px;
     font-size: 16px;
 }
+
+@media (max-width: 768px){
+    .profile-container header a{
+        position: fixed;
+        bottom: 0;
+        width: 100%;
+        left: 0;
+        border-radius: 0px;
+        width: 100%!important;
+        display: block;    
+        z-index: 10;
+    }
+
+    .profile-container ul{
+        grid-template-columns: repeat(1, 1fr);
+        margin-bottom: 80px;
+    }
+}

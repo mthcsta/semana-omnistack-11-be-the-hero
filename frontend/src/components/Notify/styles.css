@@ -1,0 +1,44 @@
+.notify-body{
+    z-index: 1000;
+    position: fixed;
+    width: 100%;
+    top:0.5em;
+}
+.notify-container{
+    margin: auto;
+    max-width: 100%;
+    width: 400px;
+    background: #7646ff; /*mediumslateblue;*/
+    padding: 1em;
+    text-align: center;
+    color: white;
+    box-shadow: 0 0 10px rgba(0,0,0,0.4);
+}
+
+.notify-container .message{
+
+}
+
+.notify-container .buttons{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 1em;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    padding-top: 0.2em;
+}
+.notify-container .buttons button{
+    padding: 0.4em 1.4em;
+    border: 0;
+    background: rgba(0,0,0,0.3);
+    color: #e4e4e4;
+}
+
+
+@media (max-width: 768px){
+    .notify-body{
+        top:0px;
+    }
+    .notify-container{
+        width:100%;
+    }
+}

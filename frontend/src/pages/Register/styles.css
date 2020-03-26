@@ -53,3 +53,15 @@
 .register-container .content form .input-group input + input{
     margin-left: 8px;
 }
+
+
+@media (max-width: 768px){
+    .register-container{
+        height: unset;
+    }
+    .register-container .content{
+        padding:26px;
+        display: block;
+    }
+
+}

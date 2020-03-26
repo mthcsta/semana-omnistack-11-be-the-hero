@@ -7,10 +7,14 @@ import './styles.css'
 
 import logoImg from '../../assets/logo.svg'
 
+import Notify from '../../components/Notify'
+
 export default ()=>{
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [value, setValue] = useState('')
+
+    const [mensagem, setMensagem] = useState('')
     
     const ongId = localStorage.getItem('ongId')
 
@@ -18,13 +22,11 @@ export default ()=>{
 
     async function handleNewIncident(e){
         e.preventDefault()
-
         const data = {
             title,
             description,
-            value
+            value: parseFloat(value.replace(',','.'))
         }
-
         try{
             api.post('incidents', data, {
                 headers:{
@@ -33,40 +35,49 @@ export default ()=>{
             })
             history.push('/profile')
         }catch(err){
-            alert('Erro ao cadastrar caso. Tente novamente.')
+            setMensagem('Erro ao cadastrar caso. Tente novamente.')
         }
     }
-    return (<div className="new-incident-container">
-        <div className="content">
-            <section>
-                <img src={logoImg} alt="Be The Hero" />
+    return(<div>
+            <Notify message={mensagem} />
+            <div className="new-incident-container">
+                <div className="content">
+                    <section>
+                        <img src={logoImg} alt="Be The Hero" />
 
-                <h1>Cadastro novo caso</h1>
-                <p>Descreva o caso detalhadamente para encontrar um herói para resolver isso.</p>
+                        <h1>Cadastro novo caso</h1>
+                        <p>Descreva o caso detalhadamente para encontrar um herói para resolver isso.</p>
 
-                <Link className="back-link" to="/profile">
-                    <FiArrowLeft size="16" color="#E02041" />
-                    Voltar para Home
-                </Link>                
-            </section>
-            <form onSubmit={handleNewIncident}>
-                <input 
-                    type="text" 
-                    placeholder="Titulo do Caso"
-                    value={title}
-                    onChange={e=>setTitle(e.target.value)} />
-                <textarea 
-                    placeholder="Descrição"
-                    value={description}
-                    onChange={e=>setDescription(e.target.value)} />
-                <input 
-                    type="text" 
-                    placeholder="Valor em reais"
-                    value={value}
-                    onChange={e=>setValue(e.target.value)} />
+                        <Link className="back-link" to="/profile">
+                            <FiArrowLeft size="16" color="#E02041" />
+                            Voltar para Home
+                        </Link>                
+                    </section>
+                    <form onSubmit={handleNewIncident}>
+                        <input 
+                            required 
+                            pattern=".{3,}"
+                            type="text" 
+                            placeholder="Titulo do Caso"
+                            value={title}
+                            onChange={e=>setTitle(e.target.value)} />
+                        <textarea
+                            required 
+                            pattern=".{3,}" 
+                            placeholder="Descrição"
+                            value={description}
+                            onChange={e=>setDescription(e.target.value)} />
+                        <input
+                            required
+                            pattern="[0-9]{1,}(,[0-9]{2})?"
+                            type="text" 
+                            placeholder="Valor em reais"
+                            value={value}
+                            onChange={e=>setValue(e.target.value.replace(/[^\d\,]/,'').replace(/(?<=\,..).*/,''))} />
 
-                <button className="button" type="submit">Cadastrar</button>
-            </form>
-        </div>
-    </div>)
+                        <button className="button" type="submit">Cadastrar</button>
+                    </form>
+                </div>
+            </div>
+           </div>)
 }
