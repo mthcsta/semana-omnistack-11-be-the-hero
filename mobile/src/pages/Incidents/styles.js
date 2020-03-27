@@ -64,4 +64,13 @@ export default StyleSheet.create({
         fontSize: 15,
         fontWeight: 'bold',   
     },
+
+    loading:{
+        position: 'absolute',
+        bottom:24,
+        left: Math.round(Dimensions.get('window').width/2-20),
+        textAlign: 'center',
+        zIndex: -1,
+    },
+
 })

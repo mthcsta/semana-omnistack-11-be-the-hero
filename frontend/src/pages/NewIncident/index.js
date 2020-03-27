@@ -56,14 +56,14 @@ export default ()=>{
                     <form onSubmit={handleNewIncident}>
                         <input 
                             required 
-                            pattern=".{3,}"
+                            pattern=".{5,}"
                             type="text" 
                             placeholder="Titulo do Caso"
                             value={title}
                             onChange={e=>setTitle(e.target.value)} />
                         <textarea
                             required 
-                            pattern=".{3,}" 
+                            pattern=".{10,}" 
                             placeholder="Descrição"
                             value={description}
                             onChange={e=>setDescription(e.target.value)} />

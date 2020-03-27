@@ -3,6 +3,11 @@ const connection = require('../database/connection')
 module.exports = {
     async index(request, response){
         const { page = 1 } = request.query
+
+        const ongWhere = ['uf', 'city'].reduce((res, key, obj)=>{
+            return typeof request.query[key] != "undefined" &&
+                    {...res, ['ongs.'+key]: request.query[key]} || res
+        }, {})
         
         const count = await connection('incidents').count()
 
@@ -18,6 +23,8 @@ module.exports = {
                 'ongs.city',
                 'ongs.uf'
             ])
+            .where(ongWhere)
+            
 
         response.header('X-Total-Count', count[0]["count(*)"])
 
