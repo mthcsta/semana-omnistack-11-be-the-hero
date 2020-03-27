@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 const api = axios.create({
-    baseURL: 'https://be-the-hero-11.herokuapp.com',
+    baseURL: process.env.BACKEND || 'http://localhost:3333',
 })
 
 export default api
