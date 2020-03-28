@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect } from 'react'
 import {Feather} from '@expo/vector-icons'
 import { useNavigation } from '@react-navigation/native'
 import { View, FlatList, Image, Text, TouchableOpacity, ActivityIndicator } from 'react-native'
@@ -25,10 +25,6 @@ export default ()=>{
     if(loading || total > 0 && incidents.length == total) return;
 
     setLoading(true)
-
-    total > 0 && (await new Promise((resolve, reject)=>{
-      setTimeout(()=>resolve(true), 500)
-    }))
 
     const response = await api.get('incidents', {
       params: { page }
@@ -88,7 +84,7 @@ export default ()=>{
       )}     
     />
 
-    ShowsRefreshIcon:{
+    {
         loading && 
          (<View style={styles.loading}>
             <ActivityIndicator size={40} color="#0000ff" />

@@ -25,6 +25,12 @@
     ],
     "ios": {
       "supportsTablet": true
-    }
+    },
+    "android": {
+      "package": "com.yourcompany.yourappname",
+      "versionCode": 1
+    },
+    "description": "Semana Omnistack 11 (RocketSeat) - Backend, Frontend e Mobile do aplicativo Be The Hero que auxilia ONGs para encontrar Heróis que ajudem em uma causa.",
+    "githubUrl": "https://github.com/mthcsta/semana-omnistack-11-be-the-hero"
   }
 }
