@@ -73,7 +73,7 @@ export default ()=>{
                             type="text" 
                             placeholder="Valor em reais"
                             value={value}
-                            onChange={e=>setValue(e.target.value.replace(/[^\d\,]/,'').replace(/(?<=\,..).*/,''))} />
+                            onChange={e=>setValue(e.target.value.replace(/[^\d,]/,'').replace(/(?<=,..).*/,''))} />
 
                         <button className="button" type="submit">Cadastrar</button>
                     </form>

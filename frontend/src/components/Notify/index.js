@@ -1,5 +1,4 @@
-import React, { useEffect } from 'react'
-import { FiX } from 'react-icons/fi'
+import React from 'react'
 
 import './styles.css'
 

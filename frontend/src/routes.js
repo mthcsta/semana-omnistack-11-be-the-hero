@@ -1,8 +1,6 @@
-import React, { useState, useEffect } from 'react'
+import React from 'react'
 
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
-
-import Notify from './components/Notify'
 
 import Logon from './pages/Logon'
 import Register from './pages/Register'

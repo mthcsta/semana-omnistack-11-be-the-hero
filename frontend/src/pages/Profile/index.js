@@ -40,7 +40,7 @@ export default ()=>{
                 }
             })
             
-            setIncidents(incidents.filter(incident=>incident.id != id))
+            setIncidents(incidents.filter(incident=>incident.id !== id))
 
             setMensagem(`O caso ${title} foi deletado.`)
             clearTimeout(hideMensagem)
@@ -72,7 +72,7 @@ export default ()=>{
                 <h1>Casos Cadastrados</h1>
 
                 {
-                    incidents.length == 0 && 
+                    incidents.length === 0 && 
                     (<div style={{padding: '1em', 'text-align':'center', color: 'dimgray'}}>
                         Não há nenhum caso cadastrado
                     </div>)
