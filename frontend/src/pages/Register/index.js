@@ -43,7 +43,11 @@ export default ()=>{
     }    
 
     function checkValidity(e){
-        !e.checkValidity() && (e.style.borderColor = 'red') || (e.style.borderColor = '')
+        if(e.checkValidity()){
+            e.style.borderColor = 'red'
+        }else{
+            e.style.borderColor = ''
+        }
     }
 
     return(<div>
@@ -83,7 +87,7 @@ export default ()=>{
                             maxLength="11"
                             type="text" 
                             placeholder="Whatsapp"
-                            value={phoneFormat && whatsapp.padEnd(11, '_').replace(/(..)?(.....)?(....)?/, '($1) $2-$3') || whatsapp}
+                            value={phoneFormat ? whatsapp.padEnd(11, '_').replace(/(..)?(.....)?(....)?/, '($1) $2-$3') : whatsapp}
                             onBlur={(e)=>!setPhoneFormat(true) && setTimeout(checkValidity, 100, e.target)}
                             onFocus={()=>setPhoneFormat(false)}
                             onChange={e=>setWhatsapp(e.target.value.replace(/\D/g,''))} />
