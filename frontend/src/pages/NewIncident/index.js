@@ -34,7 +34,10 @@ export default ()=>{
             description,
             value: parseFloat(value.replace(',','.'))
         }
+
         try{
+            if(description.length < 10)  throw new Error("description");
+
             api.post('incidents', data, {
                 headers:{
                     Authorization: ongId
@@ -42,7 +45,10 @@ export default ()=>{
             })
             history.push('/profile')
         }catch(err){
-            notify.push('Erro ao cadastrar caso. Tente novamente.')
+            if(err.message === "description")
+                notify.push('A descrição deve conter pelo menos 10 caracteres.')
+            else
+                notify.push('Erro ao cadastrar caso. Tente novamente.')
         }
         setLoading(false)
     }
