@@ -43,7 +43,7 @@ export default ()=>{
     }    
 
     function checkValidity(e){
-        if(e.checkValidity()){
+        if(!e.checkValidity()){
             e.style.borderColor = 'red'
         }else{
             e.style.borderColor = ''
@@ -83,11 +83,11 @@ export default ()=>{
                             onChange={e=>setEmail(e.target.value)} />
                         <input
                             required 
-                            pattern="\([0-9]{2}\) 9{1}[0-9]{4}-[0-9]{4}"
+                            pattern="\([0-9]{2}\) 9{1} [0-9]{4}-[0-9]{4}"
                             maxLength="11"
                             type="text" 
                             placeholder="Whatsapp"
-                            value={phoneFormat ? whatsapp.padEnd(11, '_').replace(/(..)?(.....)?(....)?/, '($1) $2-$3') : whatsapp}
+                            value={phoneFormat ? whatsapp.padEnd(11, '_').replace(/(..)?(.)(....)?(....)?/, '($1) $2 $3-$4') : whatsapp}
                             onBlur={(e)=>!setPhoneFormat(true) && setTimeout(checkValidity, 100, e.target)}
                             onFocus={()=>setPhoneFormat(false)}
                             onChange={e=>setWhatsapp(e.target.value.replace(/\D/g,''))} />
