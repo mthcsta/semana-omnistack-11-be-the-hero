@@ -1,0 +1,25 @@
+.loading-component{font-size:30px;position:relative;display: list-item;}
+.loading-component > span:nth-child(1){
+    color:white;
+    animation-delay:0.3s;
+}
+.loading-component > span:nth-child(2){
+    color:white;
+    animation-delay:0.5s;
+}
+.loading-component >span:nth-child(3){
+    color:white;
+    animation-delay:0.7s;
+}
+.loading-component >span{
+    position:absolute;
+    transform: rotate(0deg);
+    animation-name:rotate;
+    animation-duration:1.5s;
+    animation-iteration-count:infinite;
+}
+    
+@keyframes rotate{
+    from{transform: rotate(0deg);}
+    to{transform: rotate(360deg);}
+}

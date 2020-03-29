@@ -57,7 +57,9 @@ form textarea{
 .button:hover{
     filter: brightness(90%)
 }
-
+.button:disabled{
+    opacity: 0.5;
+}
 
 .back-link {
     display: flex;

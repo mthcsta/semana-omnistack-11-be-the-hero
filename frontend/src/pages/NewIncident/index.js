@@ -9,10 +9,14 @@ import logoImg from '../../assets/logo.svg'
 
 import Notify, { useNotify } from '../../components/Notify'
 
+import Loading from '../../components/Loading'
+
 export default ()=>{
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [value, setValue] = useState('')
+
+    const [loading, setLoading] = useState(false)
    
     const ongId = localStorage.getItem('ongId')
 
@@ -22,6 +26,9 @@ export default ()=>{
 
     async function handleNewIncident(e){
         e.preventDefault()
+
+        setLoading(true)
+
         const data = {
             title,
             description,
@@ -37,6 +44,7 @@ export default ()=>{
         }catch(err){
             notify.push('Erro ao cadastrar caso. Tente novamente.')
         }
+        setLoading(false)
     }
     return(<div>
             <Notify message={notify.message} />
@@ -75,7 +83,7 @@ export default ()=>{
                             value={value}
                             onChange={e=>setValue(e.target.value.replace(/[^\d,]/,'').replace(/(?<=,..).*/,''))} />
 
-                        <button className="button" type="submit">Cadastrar</button>
+                        <button className="button" type="submit" disabled={loading} >{ loading ? <Loading /> : 'Cadastrar' }</button>
                     </form>
                 </div>
             </div>

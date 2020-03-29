@@ -7,6 +7,7 @@ import api from '../../services/api'
 import './styles.css'
 
 import Notify, { useNotify } from '../../components/Notify'
+import Loading from '../../components/Loading'
 
 export default ()=>{
 
@@ -16,6 +17,8 @@ export default ()=>{
     const [city, setCity] = useState('')
     const [uf, setUf] = useState('')
 
+    const [loading, setLoading] = useState(false)
+
     const history = useHistory()
 
     const notify = useNotify()
@@ -24,6 +27,9 @@ export default ()=>{
 
     async function handeRegister(e){
         e.preventDefault()
+
+        setLoading(true)
+
         const data = {
             name, 
             email,
@@ -32,6 +38,7 @@ export default ()=>{
             uf
         }
         try{
+            await new Promise(r=>setTimeout(r, 5000, true))
             const response = await api.post('ongs', data)
 
             localStorage.setItem("loginId", response.data.id)
@@ -43,6 +50,7 @@ export default ()=>{
         } catch (err){
             notify.push('Erro no cadastro, tente novamente.')
         }
+        setLoading(false)
     }    
 
     function checkValidity(e){
@@ -120,8 +128,8 @@ export default ()=>{
                                 message="Sua região precisa conter somente 2 letras"
                                 onChange={e=>!setUf(e.target.value.toUpperCase()) && setTimeout(checkValidity, 100, e.target)} />
                         </div>
-
-                        <button className="button" type="submit">Cadastrar</button>
+                        
+                        <button className="button" type="submit" disabled={loading} >{loading ? <Loading /> : 'Cadastrar'}</button>
                     </form>
                 </div>
             </div>
