@@ -63,5 +63,9 @@
         padding:26px;
         display: block;
     }
+    .register-container .content #logo{
+        margin: auto;
+        display: block;
+    }
 
 }

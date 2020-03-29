@@ -7,18 +7,18 @@ import './styles.css'
 
 import logoImg from '../../assets/logo.svg'
 
-import Notify from '../../components/Notify'
+import Notify, { useNotify } from '../../components/Notify'
 
 export default ()=>{
     const [title, setTitle] = useState('')
     const [description, setDescription] = useState('')
     const [value, setValue] = useState('')
-
-    const [mensagem, setMensagem] = useState('')
-    
+   
     const ongId = localStorage.getItem('ongId')
 
     const history = useHistory()
+
+    const notify = useNotify()
 
     async function handleNewIncident(e){
         e.preventDefault()
@@ -35,11 +35,11 @@ export default ()=>{
             })
             history.push('/profile')
         }catch(err){
-            setMensagem('Erro ao cadastrar caso. Tente novamente.')
+            notify.push('Erro ao cadastrar caso. Tente novamente.')
         }
     }
     return(<div>
-            <Notify message={mensagem} />
+            <Notify message={notify.message} />
             <div className="new-incident-container">
                 <div className="content">
                     <section>

@@ -6,7 +6,7 @@ import logoImg from '../../assets/logo.svg'
 import api from '../../services/api'
 import './styles.css'
 
-import Notify from '../../components/Notify'
+import Notify, { useNotify } from '../../components/Notify'
 
 export default ()=>{
 
@@ -16,9 +16,9 @@ export default ()=>{
     const [city, setCity] = useState('')
     const [uf, setUf] = useState('')
 
-    const [mensagem, setMensagem] = useState('')
-
     const history = useHistory()
+
+    const notify = useNotify()
 
     const [phoneFormat, setPhoneFormat] = useState(true)
 
@@ -33,29 +33,36 @@ export default ()=>{
         }
         try{
             const response = await api.post('ongs', data)
-            setMensagem({
+
+            localStorage.setItem("loginId", response.data.id)
+
+            notify.push({
                 message:`Seu ID de acesso: ${response.data.id}`,
                 buttons:[{text:'Ok', click: ()=>history.push('/') }]
             })
         } catch (err){
-            setMensagem('Erro no cadastro, tente novamente.')
+            notify.push('Erro no cadastro, tente novamente.')
         }
     }    
 
     function checkValidity(e){
+        e.setCustomValidity("")
         if(!e.checkValidity()){
             e.style.borderColor = 'red'
+            console.log(e.value)
+            e.setCustomValidity(e.getAttribute('message'))
         }else{
             e.style.borderColor = ''
+            e.setCustomValidity("")
         }
     }
 
     return(<div>
-            <Notify message={mensagem} />
+            <Notify message={notify.message} />
             <div className="register-container">
                 <div className="content">
                     <section>
-                        <img src={logoImg} alt="Be The Hero" />
+                        <img src={logoImg} alt="Be The Hero" id="logo" width={250} height={106} />
 
                         <h1>Cadastro</h1>
                         <p>Faça seu cadastro, entre na plataforma e ajude pessoas a encontrarem os casos da sua ONG.</p>
@@ -72,25 +79,26 @@ export default ()=>{
                             type="text" 
                             placeholder="Nome da ONG" 
                             value={name} 
-                            onBlur={e=>checkValidity(e.target)}
-                            onChange={e=>setName(e.target.value.replace(/\B\s/g, ''))} />
+                            message="O Nome da ONG precisa conter ao menos 3 caracteres"                            
+                            onChange={e=>!setName(e.target.value.replace(/\B\s/g, '')) && checkValidity(e.target)} />
                         <input
                             required
                             type="email" 
                             placeholder="E-mail"
                             value={email}
-                            onBlur={e=>checkValidity(e.target)}
-                            onChange={e=>setEmail(e.target.value)} />
+                            message="O Email precisa ser válido"
+                            onChange={e=>!setEmail(e.target.value) && checkValidity(e.target)} />
                         <input
                             required 
-                            pattern="\([0-9]{2}\) 9{1} [0-9]{4}-[0-9]{4}"
+                            pattern="\([0-9]{2}\) 9{1} [0-9]{4}-[0-9]{4}|\d{2}9\d{8}"
                             maxLength="11"
                             type="text" 
                             placeholder="Whatsapp"
                             value={phoneFormat ? whatsapp.padEnd(11, '_').replace(/(..)?(.)(....)?(....)?/, '($1) $2 $3-$4') : whatsapp}
                             onBlur={(e)=>!setPhoneFormat(true) && setTimeout(checkValidity, 100, e.target)}
                             onFocus={()=>setPhoneFormat(false)}
-                            onChange={e=>setWhatsapp(e.target.value.replace(/\D/g,''))} />
+                            message="O número precisa conter DDD e o Nono Digito."
+                            onChange={e=>!setWhatsapp(e.target.value.replace(/\D/g,''))} />
                         <div className="input-group">
                             <input
                                 required
@@ -98,8 +106,8 @@ export default ()=>{
                                 type="text"
                                 placeholder="Cidade"
                                 value={city}
-                                onBlur={e=>checkValidity(e.target)}
-                                onChange={e=>setCity(e.target.value.replace(/^.|\s\b./gi, l=>l.toUpperCase()))} />
+                                message="Sua cidade precisa conter somente letras"
+                                onChange={e=>!setCity(e.target.value.replace(/^.|\s\b./gi, l=>l.toUpperCase())) && checkValidity(e.target)} />
                             <input 
                                 required 
                                 pattern="[A-Z]{2}"
@@ -108,8 +116,9 @@ export default ()=>{
                                 placeholder="UF"
                                 style={{ width: 80 }}
                                 value={uf}
-                                onBlur={e=>checkValidity(e.target)}
-                                onChange={e=>setUf(e.target.value.toUpperCase())} />
+                                onBlur = {e=>checkValidity(e.target)}
+                                message="Sua região precisa conter somente 2 letras"
+                                onChange={e=>!setUf(e.target.value.toUpperCase()) && setTimeout(checkValidity, 100, e.target)} />
                         </div>
 
                         <button className="button" type="submit">Cadastrar</button>

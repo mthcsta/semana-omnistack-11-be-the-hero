@@ -7,15 +7,15 @@ import heroesImg from '../../assets/heroes.png'
 
 import api from '../../services/api'
 
-import Notify from '../../components/Notify'
+import Notify, { useNotify } from '../../components/Notify'
 
 export default props=>{
 
-    const [id, setId] = useState('')
-
-    const [mensagem, setMensagem] = useState('')
+    const [id, setId] = useState(localStorage.getItem("loginId"))
 
     const history = useHistory()
+
+    const notify = useNotify()
 
     async function handleLogin(e){
         e.preventDefault()
@@ -28,15 +28,15 @@ export default props=>{
 
             history.push('/profile')
         }catch(err){
-            setMensagem('Falha no login. Tente Novamente.')
+            notify.push('Falha no login. Tente Novamente.')
         }
     }
 
     return(<div>
-            <Notify message={mensagem} />
+            <Notify message={notify.message} />
             <div className="logon-container">
                 <section className="form">
-                    <img src={logoImg} alt="Be The Hero" />
+                    <img src={logoImg} alt="Be The Hero" width={250} height={106} id="logo" />
 
                     <form onSubmit={handleLogin}>
                         <h1>Faça seu logon</h1>
@@ -54,7 +54,7 @@ export default props=>{
                     </form>
                 </section>
 
-                <img src={heroesImg} id="heroes" alt="Heroes" />
+                <img src={heroesImg} alt="Heroes" id="heroes" width={596} height={574} />
             </div>
            </div>)
 }

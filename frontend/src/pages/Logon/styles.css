@@ -36,4 +36,8 @@
         padding:26px;
         margin-right: 0px;
     }
+    .logon-container section.form #logo{
+        margin: auto;
+        display: block;
+    }
 }

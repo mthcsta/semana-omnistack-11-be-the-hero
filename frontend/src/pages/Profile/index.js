@@ -7,15 +7,16 @@ import './styles.css'
 
 import logoImg from '../../assets/logo.svg'
 
-import Notify from '../../components/Notify'
+import Notify, { useNotify } from '../../components/Notify'
 
 export default ()=>{
     const [incidents, setIncidents] = useState([])
 
-    const [mensagem, setMensagem] = useState('')
-    let hideMensagem = null;
+    let hideNotifyMessage = null;
 
     const history = useHistory()
+
+    const notify = useNotify()
 
     const ongId = localStorage.getItem('ongId')
     const ongName = localStorage.getItem('ongName')
@@ -42,11 +43,11 @@ export default ()=>{
             
             setIncidents(incidents.filter(incident=>incident.id !== id))
 
-            setMensagem(`O caso ${title} foi deletado.`)
-            clearTimeout(hideMensagem)
-            hideMensagem = setTimeout(()=>setMensagem(''),30500)
+            notify.push(`O caso ${title} foi deletado.`)
+            clearTimeout(hideNotifyMessage)
+            hideNotifyMessage = setTimeout(()=>notify.push(''),1500)
         }catch(err){
-            setMensagem('Erro ao deletar caso, tente novamente.')
+            notify.push('Erro ao deletar caso, tente novamente.')
         }
     }
 
@@ -57,7 +58,7 @@ export default ()=>{
     }
 
     return(<div>
-            <Notify message={mensagem} />
+            <Notify message={notify.message} />
             <div className="profile-container">
                 <header>
                     <img src={logoImg} alt="Be The Hero" />
